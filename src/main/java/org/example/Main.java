@@ -41,7 +41,7 @@ public class Main {
             }
 
         } catch (SQLException e) {
-            System.out.println("Ошибка: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
         }
 
             //File must be passed in the project folder
@@ -58,7 +58,7 @@ public class Main {
                 System.out.println("All is great!");
 
             } catch (IOException e) {
-                System.out.println("Errore with : " + e.getMessage());
+                System.out.println("Error: " + e.getMessage());
             } finally {
                 System.out.println("Done");
 
