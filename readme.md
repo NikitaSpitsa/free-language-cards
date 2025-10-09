@@ -1,0 +1,1 @@
+This is a free application with open code to creating words base for learning language.
