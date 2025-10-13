@@ -35,8 +35,8 @@ public class Application {
                 System.out.println("Something went wrong!");
                     }
 
-                System.out.println("We try to put into database 'Hello' in 'word' and 'Hellow world' in 'example' ");
-                System.out.println("We got from batabase \n ID: " + id + ", word: " + name + "\n example: " + email);
+                System.out.println("We try to put into database 'Hello' in 'word' and 'Hello world' in 'example' ");
+                System.out.println("We got from database \n ID: " + id + ", word: " + name + "\n example: " + email);
             }
 
         } catch (SQLException e) {
@@ -69,13 +69,27 @@ public class Application {
             System.out.println("Error: " + e.getMessage());
         }
 
+            HashMap<String, String> wordsMap = new HashMap<>();
+
         for (String sentence : sentences) {
-            System.out.println("-");
-            System.out.println(sentence);
-            System.out.println("--=--");
+            String[] words = sentence.split("[\\s,.!?()]+");
+
+            for (String word : words) {
+
+                if (!wordsMap.containsKey(word)){
+                    wordsMap.put(word,sentence);
+                } else if (words.length < 12 || words.length<wordsMap.get(word).length() ){
+                        wordsMap.put(word, sentence);
+                }
+
+            }
+
         }
 
-
+        wordsMap.forEach((word, example) -> {
+        System.out.println("слово - " + word);
+        System.out.println("пример - " + example);
+        });
 
     }
 }
