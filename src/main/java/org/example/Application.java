@@ -55,67 +55,67 @@ public class Application {
             System.out.println("Error: " + e.getMessage());
         }
 
-//        try (BufferedReader reader = new BufferedReader(new FileReader("directory for text files/input.txt"))) {
-//            String line;
-//            StringBuilder currentSentence = new StringBuilder();
-//
-//            while ((line = reader.readLine()) != null) {
-//                currentSentence.append(line).append(" ");
-//
-//                String[] parts = currentSentence.toString().split("(?<=[!.?])+");
-//
-//                sentences.addAll(Arrays.asList(parts).subList(0, parts.length - 1));
-//
-//                if (parts.length > 0) {
-//                    currentSentence = new StringBuilder(parts[parts.length - 1]);
-//                }
-//            }
-//
-//            if (!currentSentence.isEmpty()) {
-//                sentences.add(currentSentence.toString().trim());
-//            }
-//
-//        } catch (IOException e) {
-//            System.out.println("Error: " + e.getMessage());
-//        }
-//
-//        for (String sentence : sentences) {
-//            String[] words = sentence.split("[\\s,.!?()-]+");
-//
-//            for (String word : words) {
-//                word = word.toLowerCase();
-//
-//                if (word.matches(".*\\d.*")){
-//                    continue;
-//                }
-//
-//                if (!wordsMap.containsKey(word)){
-//                    wordsMap.put(word,sentence);
-//                    } else if (words.length < 12 || words.length<wordsMap.get(word).length() ){
-//                        wordsMap.put(word, sentence);
-//                }
-//
-//            }
-//
-//        }
-//
-//        try (Connection connection = DriverManager.getConnection(url, username, password);
-//             Statement statement = connection.createStatement()) {
-//
-//            wordsMap.forEach((word, example) -> {
-//                try {
-//                    statement.executeUpdate("INSERT INTO words(word,example) VALUES('" + word + "','" + example + "')");
-//                } catch (SQLException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            });
-//        } catch (SQLException e) {
-//            System.out.println("Error: " + e.getMessage());
-//        }
-//
-//        String outputFile = "output.csv";
-//
-//        exportWithOpenCSV(outputFile, url, username, password);
+        try (BufferedReader reader = new BufferedReader(new FileReader("directory for text files/input.txt"))) {
+            String line;
+            StringBuilder currentSentence = new StringBuilder();
+
+            while ((line = reader.readLine()) != null) {
+                currentSentence.append(line).append(" ");
+
+                String[] parts = currentSentence.toString().split("(?<=[!.?])+");
+
+                sentences.addAll(Arrays.asList(parts).subList(0, parts.length - 1));
+
+                if (parts.length > 0) {
+                    currentSentence = new StringBuilder(parts[parts.length - 1]);
+                }
+            }
+
+            if (!currentSentence.isEmpty()) {
+                sentences.add(currentSentence.toString().trim());
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        for (String sentence : sentences) {
+            String[] words = sentence.split("[\\s,.!?()-]+");
+
+            for (String word : words) {
+                word = word.toLowerCase();
+
+                if (word.matches(".*\\d.*")){
+                    continue;
+                }
+
+                if (!wordsMap.containsKey(word)){
+                    wordsMap.put(word,sentence);
+                    } else if (words.length < 12 || words.length<wordsMap.get(word).length() ){
+                        wordsMap.put(word, sentence);
+                }
+
+            }
+
+        }
+
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+             Statement statement = connection.createStatement()) {
+
+            wordsMap.forEach((word, example) -> {
+                try {
+                    statement.executeUpdate("INSERT INTO words(word,example) VALUES('" + word + "','" + example + "')");
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        String outputFile = "output.csv";
+
+        exportWithOpenCSV(outputFile, url, username, password);
 
         String fileFilePath = "output.csv";
 
