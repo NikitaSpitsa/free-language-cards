@@ -1,7 +1,12 @@
 package org.example;
 
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvValidationException;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
 import java.util.*;
@@ -108,16 +113,53 @@ public class Application {
             System.out.println("Error: " + e.getMessage());
         }
 
-//        try (Connection connection = DriverManager.getConnection(url, username, password);
-//             Statement statement = connection.createStatement()) {
-//            statement.
-//        } catch (SQLException e) {
-//            System.out.println("Error: " + e.getMessage());
-//        }
+        String outputFile = "output.csv";
+
+        exportWithOpenCSV(outputFile, url, username, password);
+
+        String fileFilePath = "output.csv";
+
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+             Statement statement = connection.createStatement();
+             CSVReader reader = new CSVReader(new FileReader(fileFilePath))) {
+
+            String[] line;
+
+            while ((line = reader.readNext()) != null ) {
+
+                for (String lineIn : line) {
+                    System.out.println(lineIn);
+                }
+            }
+            System.out.println("закончили");
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        } catch (CsvValidationException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
 
 
 
 
+    }
+
+    public static void exportWithOpenCSV(String outputFile, String url, String username, String password) {
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+             Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery("SELECT * FROM words");
+             CSVWriter writer = new CSVWriter(new FileWriter(outputFile))) {
+
+            writer.writeAll(rs, true);
+
+            System.out.println("Данные успешно экспортированы в: " + outputFile);
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
