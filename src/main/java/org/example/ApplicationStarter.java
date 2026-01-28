@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 
-public class Application {
+public class ApplicationSatarter {
     public static void main(String[] args) {
 
         System.out.print("Starting our application \n");
