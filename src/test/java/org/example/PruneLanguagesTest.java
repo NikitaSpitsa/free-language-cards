@@ -23,9 +23,9 @@ public class PruneLanguagesTest {
     public static final String COLLECTION_NAME = "jUnitTestCollection";
     public static final String LANGUAGE_TO_LEAVE = "Russian";
 
-    static String urlMongoDB = ConfigLoader.getProperty("mongoDb.url");
+    static final String urlMongoDB = ConfigLoader.getProperty("mongoDb.url");
 
-    private static final Document DOC_WITHDATA_NEED_TO_UPDATE = new Document()
+    private static final Document DOC_WITH_DATA_NEED_TO_UPDATE = new Document()
             .append("_id", new ObjectId("174c2c2c2c2c2c2c2c2c2c2c"))
             .append("pos", "noun")
             .append("head_templates", List.of(
@@ -46,7 +46,7 @@ public class PruneLanguagesTest {
                             .append("word", "книга")
                             .append("_dis1", "45 20 15 10 5 5")
             ));
-    private static final Document DOC_WITHDATA_NO_NEED_TO_UPDATE = new Document()
+    private static final Document DOC_WITH_DATA_NO_NEED_TO_UPDATE = new Document()
             .append("_id", new ObjectId("274c2c2c2c2c2c2c2c2c2c2c"))
             .append("pos", "verb")
             .append("head_templates", List.of(
@@ -163,7 +163,7 @@ public class PruneLanguagesTest {
 
         // arrange
 
-        addDataForTest(DATABASE_NAME, COLLECTION_NAME);
+        addDataForTest();
 
         try (MongoClient mongoClient = MongoClients.create(urlMongoDB)) {
 
@@ -174,8 +174,8 @@ public class PruneLanguagesTest {
             MongoCollection<Document> testCollection = mongoClient.getDatabase(DATABASE_NAME).getCollection(COLLECTION_NAME);
 
 
-            assertEquals(DOC_WITHDATA_NEED_TO_UPDATE, testCollection.find(Filters.eq("_id", new ObjectId("174c2c2c2c2c2c2c2c2c2c2c"))).first());
-            assertEquals(DOC_WITHDATA_NO_NEED_TO_UPDATE, testCollection.find(Filters.eq("_id", new ObjectId("274c2c2c2c2c2c2c2c2c2c2c"))).first());
+            assertEquals(DOC_WITH_DATA_NEED_TO_UPDATE, testCollection.find(Filters.eq("_id", new ObjectId("174c2c2c2c2c2c2c2c2c2c2c"))).first());
+            assertEquals(DOC_WITH_DATA_NO_NEED_TO_UPDATE, testCollection.find(Filters.eq("_id", new ObjectId("274c2c2c2c2c2c2c2c2c2c2c"))).first());
             assertEquals(DOC_WITHOUT_DATA_AND_NONEED_TO_UPDATE, testCollection.find(Filters.eq("_id", new ObjectId("374c2c2c2c2c2c2c2c2c2c2c"))).first());
 
         }
@@ -183,7 +183,7 @@ public class PruneLanguagesTest {
 
     }
 
-    static void addDataForTest(String databaseName, String collectionName) {
+    static void addDataForTest() {
 
         Document newDocument1 = new Document()
                 .append("_id", new ObjectId("174c2c2c2c2c2c2c2c2c2c2c"))
@@ -254,7 +254,7 @@ public class PruneLanguagesTest {
                 .append("lang_code", "es");
 
         try (MongoClient mongoClient = MongoClients.create(urlMongoDB)) {
-            MongoCollection<Document> mongoDB = mongoClient.getDatabase(databaseName).getCollection(collectionName);
+            MongoCollection<Document> mongoDB = mongoClient.getDatabase(DATABASE_NAME).getCollection(COLLECTION_NAME);
 
             mongoDB.insertMany(List.of(newDocument1, newDocument2, newDocument3));
         }

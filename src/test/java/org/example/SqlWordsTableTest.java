@@ -34,9 +34,9 @@ public class SqlWordsTableTest {
                 String name = resultSet.getString("word");
                 String exampleFromTable = resultSet.getString("example");
 
-                assertEquals(id, 1);
-                assertEquals(name, exampleName);
-                assertEquals(exampleFromTable, exampleForTableExample);
+                assertEquals(1, id);
+                assertEquals(exampleName, name);
+                assertEquals(exampleForTableExample, exampleFromTable);
 
             }
 
