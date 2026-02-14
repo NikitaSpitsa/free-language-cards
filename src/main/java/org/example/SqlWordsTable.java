@@ -14,12 +14,12 @@ public class SqlWordsTable {
     public static void textToSqlTable(String urlSqlDb, String usernameSqlDb, String passwordSqlDb, String fileName) {
         List<String> sentences = textToSentencesList(fileName);
         HashMap<String, String> wordsMap = sentansesToHashMap(sentences);
-        wordsToSqlTable(urlSqlDb, usernameSqlDb, passwordSqlDb, wordsMap);
+        addWordsToSqlTable(urlSqlDb, usernameSqlDb, passwordSqlDb, wordsMap);
     }
 
     private static List<String> textToSentencesList(String fileName) {
         List<String> sentences = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("directory_for_text_files/" + fileName))) {
             String line;
             StringBuilder currentSentence = new StringBuilder();
 
@@ -73,7 +73,7 @@ public class SqlWordsTable {
         return wordsMap;
     }
 
-    private static void wordsToSqlTable(String urlSqlDb, String usernameSqlDb, String passwordsqldb, HashMap<String, String> wordsMap) {
+    private static void addWordsToSqlTable(String urlSqlDb, String usernameSqlDb, String passwordsqldb, HashMap<String, String> wordsMap) {
         try (Connection connection = DriverManager.getConnection(urlSqlDb, usernameSqlDb, passwordsqldb);
              Statement statement = connection.createStatement()) {
 

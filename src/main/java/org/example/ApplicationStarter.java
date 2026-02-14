@@ -3,7 +3,7 @@ package org.example;
 import org.example.dao.ConfigLoader;
 
 public class ApplicationStarter {
-    static void main(String[] args) {
+    public static void main(String[] args) {
 
         System.out.print("Starting our application \n");
 
@@ -25,8 +25,8 @@ public class ApplicationStarter {
                 Choose 2 if you want work with mongo base to prune unused languages.
                 """
         );
-        int namber = 0;
-        switch (namber) {
+        int number = 1;
+        switch (number) {
             case 1:
                 SqlWordsTable.textToSqlTable(sqlDbUrl, sqlDbUsername, sqlDbPassword, fileName);
                 break;

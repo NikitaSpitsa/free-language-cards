@@ -29,7 +29,7 @@ public class PruneLanguages {
                 }
             }
 
-            if (bulkUpdates != null && !bulkUpdates.isEmpty()) {
+            if (!bulkUpdates.isEmpty()) {
                 mongoDb.bulkWrite(bulkUpdates);
             }
 
